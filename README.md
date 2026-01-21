@@ -181,7 +181,7 @@ mvn clean package
 
 ## 致谢
 
-感谢EssentialX团队的优秀框架，以及虚拟主播结城さくな带来的灵感！
+感谢EssentialX团队的优秀框架！
 
 ---
 
