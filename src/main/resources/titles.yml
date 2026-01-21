@@ -1,0 +1,49 @@
+enabled: true
+titles:
+  newbie:
+    name: "新手"
+    prefix: "§7[新手] §f"
+    suffix: ""
+    permission: "catessentials.titles.newbie"
+    priority: 1
+    enabled: true
+  
+  legend:
+    name: "传说"
+    prefix: "§5[传说] §f"
+    suffix: ""
+    permission: "catessentials.titles.legend"
+    priority: 5
+    enabled: true
+  
+  builder:
+    name: "建筑大师"
+    prefix: "§a[建筑大师] §f"
+    suffix: ""
+    permission: "catessentials.titles.builder"
+    priority: 6
+    enabled: true
+  
+  explorer:
+    name: "探险家"
+    prefix: "§9[探险家] §f"
+    suffix: ""
+    permission: "catessentials.titles.explorer"
+    priority: 7
+    enabled: true
+  
+  crafter:
+    name: "工匠"
+    prefix: "§8[工匠] §f"
+    suffix: ""
+    permission: "catessentials.titles.crafter"
+    priority: 8
+    enabled: true
+  
+  catlover:
+    name: "猫娘爱好者"
+    prefix: "§d[猫娘爱好者] §f"
+    suffix: " §6喵~"
+    permission: "catessentials.titles.catlover"
+    priority: 9
+    enabled: true

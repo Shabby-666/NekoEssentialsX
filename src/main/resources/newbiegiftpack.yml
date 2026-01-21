@@ -1,0 +1,192 @@
+# 新手大礼包配置文件
+# 该文件用于配置新手玩家首次加入服务器时可以领取的礼包物品
+# 管理员可以通过修改此文件来添加、删除或调整物品概率
+
+# 物品池配置
+# 格式: 
+# 物品ID: 
+#   name: 物品名称（可选，用于显示）
+#   material: 物品材质（必填，使用Bukkit材质名称）
+#   amount: 物品数量（可选，默认1）
+#   probability: 物品概率（可选，0-1之间的小数，默认为1.0，即100%）
+#   enchants: 附魔列表（可选）
+#     附魔类型: 附魔等级
+#   lore: 物品描述（可选，支持换行）
+
+items:
+  # 示例物品1: 钻石剑
+  diamond_sword:
+    name: "§b钻石剑"
+    material: DIAMOND_SWORD
+    amount: 1
+    probability: 0.1
+    enchants:
+      DAMAGE_ALL: 5
+      KNOCKBACK: 2
+    lore:
+      - "§7一把锋利的钻石剑"
+      - "§6攻击力: +5"
+      - "§6击退: +2"
+  
+  # 示例物品2: 金苹果
+  golden_apple:
+    name: "§6金苹果"
+    material: GOLDEN_APPLE
+    amount: 5
+    probability: 0.2
+    lore:
+      - "§7恢复你的生命值"
+      - "§a右键点击使用"
+  
+  # 示例物品3: 钻石盔甲套装
+  diamond_helmet:
+    name: "§b钻石头盔"
+    material: DIAMOND_HELMET
+    amount: 1
+    probability: 0.15
+  
+  diamond_chestplate:
+    name: "§b钻石胸甲"
+    material: DIAMOND_CHESTPLATE
+    amount: 1
+    probability: 0.15
+  
+  diamond_leggings:
+    name: "§b钻石 leggings"
+    material: DIAMOND_LEGGINGS
+    amount: 1
+    probability: 0.15
+  
+  diamond_boots:
+    name: "§b钻石 boots"
+    material: DIAMOND_BOOTS
+    amount: 1
+    probability: 0.15
+  
+  # 示例物品4: 面包
+  bread:
+    name: "§e面包"
+    material: BREAD
+    amount: 10
+    probability: 0.3
+  
+  # 示例物品5: 铁锭
+  iron_ingot:
+    name: "§f铁锭"
+    material: IRON_INGOT
+    amount: 20
+    probability: 0.4
+  
+  # 示例物品6: 金锭
+  gold_ingot:
+    name: "§6金锭"
+    material: GOLD_INGOT
+    amount: 10
+    probability: 0.3
+  
+  # 示例物品7: 钻石
+  diamond:
+    name: "§b钻石"
+    material: DIAMOND
+    amount: 5
+    probability: 0.2
+  
+  # 示例物品8: 绿宝石
+  emerald:
+    name: "§a绿宝石"
+    material: EMERALD
+    amount: 3
+    probability: 0.15
+  
+  # 示例物品9: 附魔书
+  enchantment_book:
+    name: "§5附魔书"
+    material: ENCHANTED_BOOK
+    amount: 2
+    probability: 0.1
+    enchants:
+      PROTECTION_ENVIRONMENTAL: 4
+  
+  # 示例物品10: TNT
+  tnt:
+    name: "§cTNT"
+    material: TNT
+    amount: 5
+    probability: 0.25
+  
+  # 示例物品11: 弓
+  bow:
+    name: "§f弓"
+    material: BOW
+    amount: 1
+    probability: 0.2
+    enchants:
+      ARROW_DAMAGE: 3
+      ARROW_KNOCKBACK: 2
+  
+  # 示例物品12: 箭
+  arrow:
+    name: "§f箭"
+    material: ARROW
+    amount: 32
+    probability: 0.3
+  
+  # 示例物品13: 钓鱼竿
+  fishing_rod:
+    name: "§f钓鱼竿"
+    material: FISHING_ROD
+    amount: 1
+    probability: 0.2
+    enchants:
+      LUCK: 3
+  
+  # 示例物品14: 床
+  bed:
+    name: "§6床"
+    material: RED_BED
+    amount: 1
+    probability: 0.4
+  
+  # 示例物品15: 熔炉
+  furnace:
+    name: "§8熔炉"
+    material: FURNACE
+    amount: 1
+    probability: 0.3
+  
+  # 示例物品16: 工作台
+  crafting_table:
+    name: "§a工作台"
+    material: CRAFTING_TABLE
+    amount: 1
+    probability: 0.4
+  
+  # 示例物品17: 铁镐
+  iron_pickaxe:
+    name: "§f铁镐"
+    material: IRON_PICKAXE
+    amount: 1
+    probability: 0.3
+    enchants:
+      DIG_SPEED: 2
+  
+  # 示例物品18: 铁锹
+  iron_shovel:
+    name: "§f铁锹"
+    material: IRON_SHOVEL
+    amount: 1
+    probability: 0.3
+  
+  # 示例物品19: 铁斧
+  iron_axe:
+    name: "§f铁斧"
+    material: IRON_AXE
+    amount: 1
+    probability: 0.3
+  
+  # 示例物品20: 水桶
+  water_bucket:
+    name: "§9水桶"
+    material: WATER_BUCKET
+    amount: 1
+    probability: 0.25

@@ -1,0 +1,228 @@
+name: NekoEssentialX
+main: com.nekoessentialsx.NekoEssentialX
+version: 1.0-RELEASE
+api-version: "1.20"
+description: 一个适用于Minecraft Spigot 1.20.1版本的综合性猫娘风格插件
+website: https://github.com/catessentials
+authors: [CatEssentials Team]
+softdepend: [Vault, LuckPerms, PacketEvents]
+load: STARTUP
+
+commands:
+  nekoessentialx:
+    description: NekoEssentialX插件主命令
+    usage: /<command> <reload|version|claimgift|checkin>
+    aliases: [neko, nekox, cats, cat]
+  etitle:
+    description: 管理玩家头衔
+    usage: /<command> <set|list|info|give|take|clear> [player] [title]
+    aliases: [title, t]
+  tpa:
+    description: 请求传送到指定玩家
+    usage: /<command> <player>
+    aliases: [tpask, call]
+  tpaccept:
+    description: 接受传送请求
+    usage: /<command> [player|*]
+    aliases: [tpyes]
+  tpdeny:
+    description: 拒绝传送请求
+    usage: /<command> [player|*]
+    aliases: [tpno]
+  tpacancel:
+    description: 取消已发送的传送请求
+    usage: /<command> [player]
+  money:
+    description: 管理玩家经济
+    usage: /<command> [balance|pay|deposit|withdraw|give|take] [player] [amount]
+    aliases: [eco, bal, cash]
+  titlegui:
+    description: 打开头衔GUI界面
+    usage: /<command>
+    aliases: [tgui, titlegui, 头衔]
+  # 重载Minecraft内置命令
+  help:
+    description: 显示帮助信息
+    usage: /<command> [command]
+  info:
+    description: 显示服务器信息
+    usage: /<command>
+  list:
+    description: 显示在线玩家列表
+    usage: /<command>
+  home:
+    description: 传送到家
+    usage: /<command> [home_name]
+  sethome:
+    description: 设置家
+    usage: /<command> [home_name]
+  delhome:
+    description: 删除家
+    usage: /<command> [home_name]
+  msg:
+    description: 发送私信
+    usage: /<command> <player> <message>
+    aliases: [tell, whisper, w]
+  r:
+    description: 回复私信
+    usage: /<command> <message>
+    aliases: [reply]
+  afk:
+    description: 设置AFK状态
+    usage: /<command>
+  kit:
+    description: 领取工具包
+    usage: /<command> [kit_name]
+  warp:
+    description: 传送到传送点
+    usage: /<command> [warp_name]
+  setwarp:
+    description: 设置传送点
+    usage: /<command> <warp_name>
+  delwarp:
+    description: 删除传送点
+    usage: /<command> <warp_name>
+  mainmenu:
+    description: 打开NekoEssentialX主菜单
+    usage: /<command>
+    aliases: [menu, mm, gui, nekomenu]
+
+permissions:
+  catessentials.*:
+    description: 给予玩家所有CatEssentials权限
+    children:
+      catessentials.admin: true
+      catessentials.title.*: true
+      catessentials.tpa: true
+      catessentials.tpaccept: true
+      catessentials.tpdeny: true
+      catessentials.tpacancel: true
+  
+  catessentials.admin:
+    description: 管理员权限
+    default: op
+    children:
+      catessentials.title.admin: true
+  
+  catessentials.title.*:
+    description: 所有头衔权限
+    children:
+      catessentials.title.set: true
+      catessentials.title.list: true
+      catessentials.title.info: true
+  
+  catessentials.title.admin:
+    description: 头衔管理员权限
+    default: op
+  
+  catessentials.title.set:
+    description: 设置自己的头衔
+    default: true
+  
+  catessentials.title.list:
+    description: 列出可用头衔
+    default: true
+  
+  catessentials.title.info:
+    description: 查看头衔信息
+    default: true
+  
+  catessentials.title.give:
+    description: 授予玩家头衔
+    default: op
+  
+  catessentials.title.take:
+    description: 移除玩家头衔
+    default: op
+  
+  catessentials.title.clear:
+    description: 清除玩家头衔
+    default: true
+  
+  catessentials.tpa:
+    description: 发送传送请求
+    default: true
+  
+  catessentials.tpaccept:
+    description: 接受传送请求
+    default: true
+  
+  catessentials.tpdeny:
+    description: 拒绝传送请求
+    default: true
+  
+  catessentials.tpacancel:
+    description: 取消传送请求
+    default: true
+  
+  # 头衔权限节点示例
+  catessentials.titles.admin:
+    description: 管理员头衔权限
+  
+  catessentials.titles.vip:
+    description: VIP头衔权限
+  
+  catessentials.titles.member:
+    description: 会员头衔权限
+  
+  catessentials.titles.catlover:
+    description: 猫娘爱好者头衔权限
+  
+  catessentials.titles.builder:
+    description: 建筑大师头衔权限
+  
+  catessentials.titles.explorer:
+    description: 探险家头衔权限
+  
+  catessentials.titles.crafter:
+    description: 工匠头衔权限
+  
+  catessentials.titles.newbie:
+    description: 新手头衔权限
+    
+  # 经济系统权限
+  catessentials.economy.*:
+    description: 给予玩家所有经济权限
+    children:
+      catessentials.economy.use: true
+      catessentials.economy.admin: true
+  
+  catessentials.economy.use:
+    description: 使用经济系统的基本权限
+    default: true
+    children:
+      catessentials.economy.balance: true
+      catessentials.economy.pay: true
+  
+  catessentials.economy.balance:
+    description: 查看自己余额的权限
+    default: true
+  
+  catessentials.economy.pay:
+    description: 支付给其他玩家的权限
+    default: true
+  
+  catessentials.economy.admin:
+    description: 经济管理权限
+    default: op
+    children:
+      catessentials.economy.deposit: true
+      catessentials.economy.withdraw: true
+      catessentials.economy.give: true
+      catessentials.economy.take: true
+  
+  catessentials.economy.deposit:
+    description: 给玩家充值的权限
+    default: op
+  
+  catessentials.economy.withdraw:
+    description: 从玩家账户扣款的权限
+    default: op
+  
+  catessentials.economy.give:
+    description: 给玩家金钱的权限
+    default: op
+  
+  catessentials.economy.take:
+    description: 从玩家扣除金钱的权限
+    default: op

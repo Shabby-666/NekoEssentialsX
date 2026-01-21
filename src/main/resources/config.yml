@@ -1,0 +1,54 @@
+# CatEssentials 主配置文件
+
+# 插件启用/禁用
+enabled: true
+
+# 语言设置
+language: "zh_CN"
+
+# 调试模式
+debug: false
+
+# 猫娘风格配置
+cat-style:
+  enabled: true
+  prefix: "§6[喵~] §f"
+  suffix: " §6喵~"
+  replace-system-messages: true
+  replace-command-messages: true
+
+# 头衔系统配置
+titles:
+  enabled: true
+  update-display-name: true
+  use-scoreboard-teams: true
+
+# 传送系统配置
+tp:
+  enabled: true
+  delay: 3
+  cancel-on-move: true
+  cancel-on-damage: true
+  max-distance: 10000
+
+# 经济系统配置
+economy:
+  enabled: true
+  use-vault: true
+  default-currency-symbol: "$"
+  currency-name: "金币"
+  currency-name-plural: "金币"
+
+# 权限系统配置
+permissions:
+  enabled: true
+  use-luckperms: true
+  default-group: "default"
+
+# 日志配置
+logging:
+  enabled: true
+  level: "INFO"
+  file: "catessentials.log"
+  max-size: 10MB
+  max-files: 5
