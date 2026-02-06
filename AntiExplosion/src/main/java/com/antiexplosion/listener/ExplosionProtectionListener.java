@@ -1,23 +1,25 @@
-package com.nekoessentialsx.explosion;
+package com.antiexplosion.listener;
 
-import com.nekoessentialsx.NekoEssentialX;
+import com.antiexplosion.AntiExplosion;
+import com.antiexplosion.manager.ExplosionProtectionManager;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.ExplosionPrimeEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityInteractEvent;
 
 public class ExplosionProtectionListener implements Listener {
-    private final NekoEssentialX plugin;
+    private final AntiExplosion plugin;
     private final ExplosionProtectionManager explosionManager;
 
-    public ExplosionProtectionListener(NekoEssentialX plugin, ExplosionProtectionManager explosionManager) {
+    public ExplosionProtectionListener(AntiExplosion plugin, ExplosionProtectionManager explosionManager) {
         this.plugin = plugin;
         this.explosionManager = explosionManager;
     }
@@ -25,7 +27,7 @@ public class ExplosionProtectionListener implements Listener {
     /**
      * 处理实体爆炸事件
      */
-    @EventHandler(priority = org.bukkit.event.EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.HIGH)
     public void onEntityExplode(EntityExplodeEvent event) {
         if (!explosionManager.isEnabled()) {
             return;
@@ -63,7 +65,7 @@ public class ExplosionProtectionListener implements Listener {
     /**
      * 处理方块爆炸事件
      */
-    @EventHandler(priority = org.bukkit.event.EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockExplode(BlockExplodeEvent event) {
         if (!explosionManager.isEnabled()) {
             return;
@@ -86,7 +88,7 @@ public class ExplosionProtectionListener implements Listener {
     /**
      * 处理实体改变方块事件（凋零、末影龙等破坏方块）
      */
-    @EventHandler(priority = org.bukkit.event.EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onEntityChangeBlock(EntityChangeBlockEvent event) {
         if (!explosionManager.isEnabled()) {
             return;
@@ -148,7 +150,7 @@ public class ExplosionProtectionListener implements Listener {
     /**
      * 处理实体损伤事件（用于处理末影龙撞击破坏方块）
      */
-    @EventHandler(priority = org.bukkit.event.EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
         if (!explosionManager.isEnabled()) {
             return;
@@ -184,7 +186,7 @@ public class ExplosionProtectionListener implements Listener {
     /**
      * 处理末影龙特定事件（用于处理末影龙破坏方块）
      */
-    @EventHandler(priority = org.bukkit.event.EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onEntityInteract(EntityInteractEvent event) {
         if (!explosionManager.isEnabled()) {
             return;
@@ -219,7 +221,7 @@ public class ExplosionProtectionListener implements Listener {
     /**
      * 处理末影龙破坏方块的特殊情况（使用ExplosionPrimeEvent处理）
      */
-    @EventHandler(priority = org.bukkit.event.EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onEnderDragonExplosionPrime(ExplosionPrimeEvent event) {
         if (!explosionManager.isEnabled()) {
             return;
@@ -254,7 +256,7 @@ public class ExplosionProtectionListener implements Listener {
     /**
      * 处理末影龙破坏方块的特殊情况（使用EntityExplodeEvent处理）
      */
-    @EventHandler(priority = org.bukkit.event.EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onEnderDragonExplode(EntityExplodeEvent event) {
         if (!explosionManager.isEnabled()) {
             return;
@@ -290,7 +292,7 @@ public class ExplosionProtectionListener implements Listener {
     /**
      * 处理方块破坏事件，特别是末影龙破坏方块的情况
      */
-    @EventHandler(priority = org.bukkit.event.EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockBreak(org.bukkit.event.block.BlockBreakEvent event) {
         if (!explosionManager.isEnabled()) {
             return;
@@ -315,7 +317,7 @@ public class ExplosionProtectionListener implements Listener {
     /**
      * 处理爆炸触发事件（用于调整爆炸威力）
      */
-    @EventHandler(priority = org.bukkit.event.EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.HIGH)
     public void onExplosionPrime(ExplosionPrimeEvent event) {
         if (!explosionManager.isEnabled()) {
             return;

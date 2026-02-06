@@ -2,6 +2,7 @@ package com.nekoessentialsx.commands;
 
 import com.nekoessentialsx.NekoEssentialX;
 import com.nekoessentialsx.catstyle.CatChatProcessor;
+import com.nekoessentialsx.gui.ChestGUIManager;
 import com.nekoessentialsx.kits.KitManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -11,13 +12,19 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 工具包命令
+ * 支持双调用方式：指令调用和GUI调用
+ */
 public class Commandkit implements CommandExecutor, TabCompleter {
     private final NekoEssentialX plugin;
     private final KitManager kitManager;
+    private final ChestGUIManager chestGUIManager;
 
     public Commandkit(NekoEssentialX plugin) {
         this.plugin = plugin;
         this.kitManager = plugin.getKitManager();
+        this.chestGUIManager = plugin.getChestGUIManager();
         // 注册Tab补全器到kit命令
         plugin.getCommand("kit").setTabCompleter(this);
     }
@@ -34,15 +41,13 @@ public class Commandkit implements CommandExecutor, TabCompleter {
             CatChatProcessor processor = CatChatProcessor.getInstance();
             
             if (args.length < 1) {
-                // 显示可用工具包列表
-                showKitList(player, processor);
+                // 如果没有提供工具包名称，打开工具包菜单GUI
+                chestGUIManager.openKitMenu(player, 1);
                 return true;
             }
 
             String kitName = args[0];
-            
-            // 领取工具包
-            kitManager.giveKit(player, kitName);
+            claimKit(player, kitName, processor);
         } catch (Exception e) {
             String errorMessage = "§c执行命令时发生错误！喵~";
             if (sender instanceof Player) {
@@ -62,13 +67,16 @@ public class Commandkit implements CommandExecutor, TabCompleter {
     }
 
     /**
-     * 显示可用工具包列表
+     * 领取工具包
+     * 此方法同时被指令和GUI调用
+     * @param player 玩家
+     * @param kitName 工具包名称
+     * @param processor 猫娘风格处理器
      */
-    private void showKitList(Player player, CatChatProcessor processor) {
-        List<String> kitNames = kitManager.getKitNames();
-        
-        if (kitNames.isEmpty()) {
-            String message = "§c当前没有可用的工具包！喵~";
+    public void claimKit(Player player, String kitName, CatChatProcessor processor) {
+        // 检查工具包是否存在
+        if (!kitManager.getKitNames().contains(kitName)) {
+            String message = "§c找不到名为 '" + kitName + "' 的工具包！喵~";
             if (processor != null) {
                 processor.sendCatStyleMessage(player, message);
             } else {
@@ -77,24 +85,8 @@ public class Commandkit implements CommandExecutor, TabCompleter {
             return;
         }
         
-        StringBuilder message = new StringBuilder("§6===== §e可用工具包列表 §6=====\n");
-        
-        for (String kitName : kitNames) {
-            String canClaim = kitManager.canClaimKit(player, kitName);
-            if (canClaim == null) {
-                message.append("§a- §6").append(kitName).append("§a喵~\n");
-            } else {
-                message.append("§c- §6").append(kitName).append(" §c(不可用)喵~\n");
-            }
-        }
-        
-        message.append("§a使用 /kit <工具包名称> 领取工具包！喵~");
-        
-        if (processor != null) {
-            processor.sendCatStyleMessage(player, message.toString());
-        } else {
-            player.sendMessage(message.toString());
-        }
+        // 领取工具包
+        kitManager.giveKit(player, kitName);
     }
 
     @Override

@@ -2,7 +2,7 @@ package com.nekoessentialsx.commands;
 
 import com.nekoessentialsx.NekoEssentialX;
 import com.nekoessentialsx.catstyle.CatChatProcessor;
-import com.nekoessentialsx.gui.GUIManager;
+import com.nekoessentialsx.gui.ChestGUIManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -10,13 +10,17 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import java.util.List;
 
+/**
+ * 主菜单命令
+ * 支持通过指令打开箱子GUI主菜单
+ */
 public class Commandmainmenu implements CommandExecutor, TabCompleter {
     private final NekoEssentialX plugin;
-    private final GUIManager guiManager;
+    private final ChestGUIManager chestGUIManager;
 
     public Commandmainmenu(NekoEssentialX plugin) {
         this.plugin = plugin;
-        this.guiManager = plugin.getGuiManager();
+        this.chestGUIManager = plugin.getChestGUIManager();
     }
 
     @Override
@@ -30,8 +34,8 @@ public class Commandmainmenu implements CommandExecutor, TabCompleter {
             Player player = (Player) sender;
             CatChatProcessor processor = CatChatProcessor.getInstance();
             
-            // 打开主菜单
-            guiManager.openMainGUI(player);
+            // 打开箱子GUI主菜单
+            chestGUIManager.openMainMenu(player);
             
             // 发送猫娘风格的消息
             if (processor != null) {

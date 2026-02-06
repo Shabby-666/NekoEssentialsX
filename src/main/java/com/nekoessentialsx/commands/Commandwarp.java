@@ -2,6 +2,7 @@ package com.nekoessentialsx.commands;
 
 import com.nekoessentialsx.NekoEssentialX;
 import com.nekoessentialsx.catstyle.CatChatProcessor;
+import com.nekoessentialsx.gui.ChestGUIManager;
 import com.nekoessentialsx.warp.WarpManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -11,13 +12,19 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 传送点命令
+ * 支持双调用方式：指令调用和GUI调用
+ */
 public class Commandwarp implements CommandExecutor, TabCompleter {
     private final NekoEssentialX plugin;
     private final WarpManager warpManager;
+    private final ChestGUIManager chestGUIManager;
 
     public Commandwarp(NekoEssentialX plugin) {
         this.plugin = plugin;
         this.warpManager = plugin.getWarpManager();
+        this.chestGUIManager = plugin.getChestGUIManager();
         // 注册Tab补全器到warp命令
         plugin.getCommand("warp").setTabCompleter(this);
     }
@@ -34,42 +41,13 @@ public class Commandwarp implements CommandExecutor, TabCompleter {
             CatChatProcessor processor = CatChatProcessor.getInstance();
             
             if (args.length < 1) {
-                // 显示可用传送点列表
-                showWarpList(player, processor);
+                // 如果没有提供传送点名称，打开传送点菜单GUI
+                chestGUIManager.openWarpMenu(player, 1);
                 return true;
             }
 
             String warpName = args[0];
-            
-            // 检查传送点是否存在
-            if (!warpManager.warpExists(warpName)) {
-                String message = "§c找不到名为 '" + warpName + "' 的传送点！喵~";
-                if (processor != null) {
-                    processor.sendCatStyleMessage(player, message);
-                } else {
-                    player.sendMessage(message);
-                }
-                return true;
-            }
-            
-            // 传送到传送点
-            boolean success = warpManager.teleportToWarp(player, warpName);
-            
-            if (success) {
-                String message = "§a已成功传送到传送点 '§6" + warpName + "§a'！喵~";
-                if (processor != null) {
-                    processor.sendCatStyleMessage(player, message);
-                } else {
-                    player.sendMessage(message);
-                }
-            } else {
-                String message = "§c传送失败！请检查传送点是否有效！喵~";
-                if (processor != null) {
-                    processor.sendCatStyleMessage(player, message);
-                } else {
-                    player.sendMessage(message);
-                }
-            }
+            teleportToWarp(player, warpName, processor);
         } catch (Exception e) {
             String errorMessage = "§c执行命令时发生错误！喵~";
             if (sender instanceof Player) {
@@ -89,13 +67,16 @@ public class Commandwarp implements CommandExecutor, TabCompleter {
     }
 
     /**
-     * 显示可用传送点列表
+     * 传送到传送点
+     * 此方法同时被指令和GUI调用
+     * @param player 玩家
+     * @param warpName 传送点名称
+     * @param processor 猫娘风格处理器
      */
-    private void showWarpList(Player player, CatChatProcessor processor) {
-        List<String> warpNames = warpManager.getWarpNames();
-        
-        if (warpNames.isEmpty()) {
-            String message = "§c当前没有可用的传送点！喵~";
+    public void teleportToWarp(Player player, String warpName, CatChatProcessor processor) {
+        // 检查传送点是否存在
+        if (!warpManager.warpExists(warpName)) {
+            String message = "§c找不到名为 '" + warpName + "' 的传送点！喵~";
             if (processor != null) {
                 processor.sendCatStyleMessage(player, message);
             } else {
@@ -104,18 +85,23 @@ public class Commandwarp implements CommandExecutor, TabCompleter {
             return;
         }
         
-        StringBuilder message = new StringBuilder("§6===== §e可用传送点列表 §6=====\n");
+        // 传送到传送点
+        boolean success = warpManager.teleportToWarp(player, warpName);
         
-        for (String warpName : warpNames) {
-            message.append("§a- §6").append(warpName).append("§a喵~\n");
-        }
-        
-        message.append("§a使用 /warp <传送点名称> 传送到指定传送点！喵~");
-        
-        if (processor != null) {
-            processor.sendCatStyleMessage(player, message.toString());
+        if (success) {
+            String message = "§a已成功传送到传送点 '§6" + warpName + "§a'！喵~";
+            if (processor != null) {
+                processor.sendCatStyleMessage(player, message);
+            } else {
+                player.sendMessage(message);
+            }
         } else {
-            player.sendMessage(message.toString());
+            String message = "§c传送失败！请检查传送点是否有效！喵~";
+            if (processor != null) {
+                processor.sendCatStyleMessage(player, message);
+            } else {
+                player.sendMessage(message);
+            }
         }
     }
 

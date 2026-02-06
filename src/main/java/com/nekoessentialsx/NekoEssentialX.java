@@ -6,8 +6,7 @@ import com.nekoessentialsx.config.ConfigRecoveryManager;
 import com.nekoessentialsx.database.DatabaseManager;
 import com.nekoessentialsx.dailylogin.DailyLoginManager;
 import com.nekoessentialsx.economy.EconomyManager;
-import com.nekoessentialsx.explosion.ExplosionProtectionManager;
-import com.nekoessentialsx.explosion.ExplosionProtectionListener;
+import com.nekoessentialsx.gui.ChestGUIManager;
 import com.nekoessentialsx.gui.GUIListener;
 import com.nekoessentialsx.gui.GUIManager;
 import com.nekoessentialsx.kits.KitManager;
@@ -25,24 +24,16 @@ public class NekoEssentialX extends JavaPlugin {
     private TPAManager tpaManager;
     private EconomyManager economyManager;
     private GUIManager guiManager;
+    private ChestGUIManager chestGUIManager;
     private ConfigRecoveryManager configRecoveryManager;
     private NewbieGiftManager newbieGiftManager;
     private DailyLoginManager dailyLoginManager;
     private AFKManager afkManager;
     private KitManager kitManager;
     private WarpManager warpManager;
-    private ExplosionProtectionManager explosionProtectionManager;
     private net.kyori.adventure.platform.bukkit.BukkitAudiences audiences;
     private Object forgeListener;
     private Object forgeEventBus;
-    
-    /**
-     * 获取防爆保护管理器实例
-     * @return 防爆保护管理器实例
-     */
-    public ExplosionProtectionManager getExplosionProtectionManager() {
-        return explosionProtectionManager;
-    }
 
     @Override
     public void onEnable() {
@@ -90,6 +81,10 @@ public class NekoEssentialX extends JavaPlugin {
         // 初始化GUI系统
         guiManager.initialize();
         
+        // 初始化新的箱子GUI管理器
+        chestGUIManager = new ChestGUIManager(this);
+        chestGUIManager.initialize();
+        
         // 初始化新手礼包管理器
         newbieGiftManager = new NewbieGiftManager(this);
         newbieGiftManager.onEnable();
@@ -106,11 +101,6 @@ public class NekoEssentialX extends JavaPlugin {
         
         // 初始化传送点管理器
         warpManager = new WarpManager(this);
-        
-        // 初始化防爆保护管理器
-        explosionProtectionManager = new ExplosionProtectionManager(this);
-        getServer().getPluginManager().registerEvents(
-                new ExplosionProtectionListener(this, explosionProtectionManager), this);
         
         // 初始化Adventure Audiences
         audiences = net.kyori.adventure.platform.bukkit.BukkitAudiences.create(this);
@@ -480,10 +470,6 @@ public class NekoEssentialX extends JavaPlugin {
         if (newbieGiftManager != null) {
             newbieGiftManager.reload();
         }
-        
-        if (explosionProtectionManager != null) {
-            explosionProtectionManager.reloadConfig();
-        }
     }
 
     public CatStyleManager getCatStyleManager() {
@@ -508,6 +494,14 @@ public class NekoEssentialX extends JavaPlugin {
     
     public GUIManager getGuiManager() {
         return guiManager;
+    }
+    
+    /**
+     * 获取箱子GUI管理器实例
+     * @return 箱子GUI管理器实例
+     */
+    public ChestGUIManager getChestGUIManager() {
+        return chestGUIManager;
     }
     
     public NewbieGiftManager getNewbieGiftManager() {

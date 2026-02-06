@@ -3,6 +3,7 @@ package com.nekoessentialsx.commands;
 import com.nekoessentialsx.NekoEssentialX;
 import com.nekoessentialsx.catstyle.CatChatProcessor;
 import com.nekoessentialsx.database.DatabaseManager;
+import com.nekoessentialsx.gui.ChestGUIManager;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -13,13 +14,19 @@ import org.bukkit.entity.Player;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * 家命令
+ * 支持双调用方式：指令调用和GUI调用
+ */
 public class Commandhome implements CommandExecutor, TabCompleter {
     private final NekoEssentialX plugin;
     private final DatabaseManager databaseManager;
+    private final ChestGUIManager chestGUIManager;
 
     public Commandhome(NekoEssentialX plugin) {
         this.plugin = plugin;
         this.databaseManager = plugin.getDatabaseManager();
+        this.chestGUIManager = plugin.getChestGUIManager();
         // 注册Tab补全器到home命令
         plugin.getCommand("home").setTabCompleter(this);
     }
@@ -40,23 +47,8 @@ public class Commandhome implements CommandExecutor, TabCompleter {
                 String homeName = args[0];
                 teleportToHome(player, homeName, processor);
             } else {
-                // 如果没有提供家名称，显示家列表或传送到默认家
-                List<String> homeNames = databaseManager.getPlayerHomeNames(playerId);
-                
-                if (homeNames.isEmpty()) {
-                    String message = "§c你还没有设置家！使用 /sethome 设置你的第一个家吧！喵~";
-                    if (processor != null) {
-                        processor.sendCatStyleMessage(player, message);
-                    } else {
-                        player.sendMessage(message);
-                    }
-                } else if (homeNames.size() == 1 || homeNames.contains("default")) {
-                    // 如果只有一个家或有家名为default，直接传送到default家
-                    teleportToHome(player, "default", processor);
-                } else {
-                    // 显示家列表
-                    showHomeList(player, homeNames, processor);
-                }
+                // 如果没有提供家名称，打开家菜单GUI
+                chestGUIManager.openHomeMenu(player);
             }
         } catch (Exception e) {
             String errorMessage = "§c执行命令时发生错误！喵~";
@@ -78,8 +70,12 @@ public class Commandhome implements CommandExecutor, TabCompleter {
 
     /**
      * 传送到指定家
+     * 此方法同时被指令和GUI调用
+     * @param player 玩家
+     * @param homeName 家名称
+     * @param processor 猫娘风格处理器
      */
-    private void teleportToHome(Player player, String homeName, CatChatProcessor processor) {
+    public void teleportToHome(Player player, String homeName, CatChatProcessor processor) {
         String playerId = player.getName();
         
         if (!databaseManager.hasPlayerHome(playerId, homeName)) {
@@ -136,25 +132,6 @@ public class Commandhome implements CommandExecutor, TabCompleter {
             processor.sendCatStyleMessage(player, message);
         } else {
             player.sendMessage(message);
-        }
-    }
-
-    /**
-     * 显示玩家所有家列表
-     */
-    private void showHomeList(Player player, List<String> homeNames, CatChatProcessor processor) {
-        StringBuilder message = new StringBuilder("§6===== §e你的家列表 §6=====\n");
-        
-        for (String homeName : homeNames) {
-            message.append("§a- §6").append(homeName).append("§a喵~\n");
-        }
-        
-        message.append("§a使用 /home <家名称> 传送到指定家！喵~");
-        
-        if (processor != null) {
-            processor.sendCatStyleMessage(player, message.toString());
-        } else {
-            player.sendMessage(message.toString());
         }
     }
 
