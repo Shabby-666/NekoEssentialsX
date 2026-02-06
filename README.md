@@ -61,14 +61,6 @@ NekoEssentialX是一个适用于Minecraft Spigot服务器的综合性插件，�
 - 服务器信息
 - 帮助系统
 
-### 9. 防爆系统
-- 全面的爆炸防护
-- 支持拦截末影龙、凋零等实体的破坏行为
-- 可配置的爆炸类型控制
-- 支持TNT、末影水晶、床等爆炸的防护
-- 实体破坏方块控制
-- 详细的日志记录
-
 ## 安装方法
 
 1. 确保您的服务器运行的是Java 17+和支持的Minecraft版本
@@ -154,17 +146,6 @@ NekoEssentialX是一个适用于Minecraft Spigot服务器的综合性插件，�
 ### 新手礼包配置
 - `plugins/NekoEssentialX/newbiegiftpack.yml` - 礼包物品配置
 
-### 防爆系统配置
-- `plugins/NekoEssentialX/config.yml` - 防爆系统核心配置
-  - `anti-explosion.enabled` - 防爆系统总开关
-  - `anti-explosion.entity-explosion` - 生物爆炸配置
-  - `anti-explosion.entity-block-break` - 实体破坏方块配置
-  - `anti-explosion.tnt-explosion` - TNT爆炸配置
-  - `anti-explosion.end-crystal-explosion` - 末影水晶爆炸配置
-  - `anti-explosion.bed-explosion` - 床爆炸配置
-  - `anti-explosion.other-explosion` - 其他爆炸配置
-  - `anti-explosion.logging` - 日志配置
-
 ## 权限节点
 
 ### 基本权限
@@ -180,10 +161,6 @@ NekoEssentialX是一个适用于Minecraft Spigot服务器的综合性插件，�
 - `nekoessentialsx.title` - 允许使用头衔命令
 - `nekoessentialsx.title.admin` - 允许管理所有头衔
 - `nekoessentialsx.titles.<title>` - 允许使用特定头衔
-
-### 防爆系统权限
-- `nekoessentialsx.anti-explosion` - 允许使用防爆系统相关功能
-- `nekoessentialsx.anti-explosion.admin` - 允许管理防爆系统配置
 
 ## 插件特点
 
